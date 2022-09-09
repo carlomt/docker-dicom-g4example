@@ -33,4 +33,6 @@ COPY --from=builder /workspace/DICOM-build /workspace/DICOM-build
 
 # ENV LD_LIBRARY_PATH=/workspace/DICOM-install/lib/:$LD_LIBRARY_PAT
 
-CMD ["./workspace/DICOM-build/DICOM"]
+WORKDIR /workspace/DICOM-build
+
+CMD ["./DICOM"]
