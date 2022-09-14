@@ -2,6 +2,9 @@ ARG BASE_IMAGE=carlomt/geant4:11.0.2-dcmtk
 
 FROM $BASE_IMAGE AS builder
 
+LABEL maintainer.name="Carlo Mancini Terracciano"
+LABEL maintainer.email="carlo.mancini.terracciano@roma1.infn.it"
+
 ENV LANG=C.UTF-8
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 ENV DEBIAN_FRONTEND=noninteractive
