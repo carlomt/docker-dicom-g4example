@@ -1,5 +1,5 @@
-ARG BASE_IMAGE=carlomt/geant4:11.0.2-dcmtk
-
+ARG BASE_IMAGE=carlomt/geant4:11.2.0-dcmtk
+               
 FROM $BASE_IMAGE AS builder
 
 LABEL maintainer.name="Carlo Mancini Terracciano"
@@ -12,8 +12,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /workspace
 
 RUN cd /workspace && \
-    wget https://gitlab.cern.ch/geant4/geant4/-/archive/master/geant4-master.tar.gz?path=examples/extended/medical/DICOM -O dicom.tar.gz && \
-    tar xf dicom.tar.gz --strip-components 4 && \
+    curl https://gitlab.cern.ch/geant4/geant4/-/archive/geant4-`/opt/geant4/bin/geant4-config --version | awk -F '.' '{print $1"."$2}'`-release/geant4-master.tar.gz?path=examples/extended/medical/DICOM \
+    --output DICOM.tar.gz && \
+    tar xf DICOM.tar.gz --strip-components 4 && \
     mkdir DICOM-install && \
     mkdir DICOM-build && \
     cd DICOM-build && \
@@ -38,4 +39,4 @@ COPY --from=builder /workspace/DICOM-build /workspace/DICOM-build
 
 WORKDIR /workspace/DICOM-build
 
-CMD ["./DICOM"]
+CMD ["./DICOM run.mac"]
